@@ -10,6 +10,7 @@ export type BcDocument = {
     fa_icon_name: string;
     sensible: boolean;
     is_valid: boolean;
+    original_filename?: string;
     expo_icon_name: string;
     included_documents?: BcDocument[];
     included_simple_files?: SimpleFile[];

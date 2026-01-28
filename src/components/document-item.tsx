@@ -1,7 +1,7 @@
 'use client'
 import {BcDocument} from "@/types/bcDocument";
 import {isSimpleFile} from "@/types/simple-file";
-import React, {useRef} from "react";
+import React, {Fragment, useRef} from "react";
 import Link from "next/dist/client/link";
 
 export function DocumentItem({document}: {document: BcDocument}) {
@@ -18,17 +18,6 @@ export function DocumentItem({document}: {document: BcDocument}) {
             copyBtnRef.current!.classList.remove('hidden');
             messageRef.current!.classList.add('hidden');
         }, 2000);
-
-        /*navigator.clipboard.writeText(btn.getAttribute('data-url')).then(() => {
-
-                        const messageEl = btn.parentNode.querySelector('.copy-url-success-message');
-                        messageEl.classList.remove('hidden');
-                        btn.classList.add('hidden');
-                        setTimeout(() => {
-                            messageEl.classList.add('hidden');
-                            btn.classList.remove('hidden');
-                        }, 2000);
-                    });*/
     }
 
     return (
@@ -44,19 +33,23 @@ export function DocumentItem({document}: {document: BcDocument}) {
                 {document.lang &&
                     <span className="lang">({document.lang.toUpperCase()})</span>
                 }
-
-                {document.is_valid ||
-                    <p className="invalid-msg">
-                        <i className="fa fa-triangle-exclamation"></i> Fichier absent
-                    </p>
-                }
             </Link>
 
+            {document.is_valid ||
+                <p className="invalid-msg">
+                    <i className="fa fa-triangle-exclamation"></i>
+                    <span> Fichier absent : </span>
+                    <span>{document.original_filename || "Unknown name"}</span>
+                </p>
+            }
             <div className="copy-url-block">
-                <p ref={messageRef} className="copy-url-success-message hidden">Lien copié !</p>
-                <button className="copy-url-btn" onClick={copyLinkInClipboard} ref={copyBtnRef}>
-                    <i className="fa fa-copy"></i> <span>Copier le lien</span>
-                </button>
+
+                {document.is_valid && <>
+                    <p ref={messageRef} className="copy-url-success-message hidden">Lien copié !</p>
+                    <button className="copy-url-btn" onClick={copyLinkInClipboard} ref={copyBtnRef}>
+                        <i className="fa fa-copy"></i> <span>Copier le lien</span>
+                    </button>
+                </>}
             </div>
         </li>
     );
