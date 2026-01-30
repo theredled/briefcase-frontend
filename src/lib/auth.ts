@@ -2,45 +2,58 @@
 import {cookies} from 'next/headers'
 
 export async function login(email: string, password: string) {
+    const url = process.env.API_URL + '/login_check';
+    console.log('login url : ', url);
+    try {
+        const res = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({username: email, password: password})
+        });
 
-    const res = await fetch(process.env.API_URL + '/login_check', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({username: email, password})
-    })/*.then(async(resp: Response) => {
-        const data = await resp.json();
-        //await AsyncStorage.setItem('token', data.token);
-        //await AsyncStorage.setItem('user', JSON.stringify({email: email}));
-        authLogin({email: email}, data.token);
-        Alert.alert('Connexion réussie', `Bienvenue ${email}`);
-        navigation.navigate('Index');
-    }).catch(() => {
-        Alert.alert('Erreur', 'Identifiants incorrects');
-    });*/
+        console.log('login response : ', res);
+        const data = await res.json();
+        console.log('login data : ', data);
 
-    const data = await res.json()
+        if (data?.code && data?.message)
+            return {
+                error: data.message,
+            };
+        if (res && res.status !== 200)
+            throw new Error(`Erreur de connexion : ${res.status} ${res.statusText}`);
 
-    console.log('login : ', data);
-    if (data.token) {
-        const cookieStore = await cookies()
-        cookieStore.set('token', data.token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
-            maxAge: 3600 // 1h
-        })
-
-        if (data.refresh_token) {
-            cookieStore.set('refresh_token', data.refresh_token, {
+        if (data.token) {
+            const cookieStore = await cookies()
+            cookieStore.set('token', data.token, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
                 sameSite: 'strict',
-                maxAge: 604800 // 7 jours
+                maxAge: 3600 // 1h
             })
+
+            if (data.refresh_token) {
+                cookieStore.set('refresh_token', data.refresh_token, {
+                    httpOnly: true,
+                    secure: process.env.NODE_ENV === 'production',
+                    sameSite: 'strict',
+                    maxAge: 604800 // 7 jours
+                })
+            }
         }
+
+        return data;
+    } catch (e) {
+        const errorMessage = e instanceof Error ? e.message : new Error('Unknown error');
+        console.log('login failed:', e);
+        return {
+            error: errorMessage,
+        };
     }
 
-    return data
+
 }
 
 export async function logout() {

@@ -10,14 +10,21 @@ export async function callApi(endpoint: string, options?: any) {
     const url = `${process.env.API_URL}/${endpoint}`;
     console.log('callApi : ', url);
 
-    const res = await fetch(url, {
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...(token && {Authorization: `Bearer ${token}`}),
-            ...options?.headers
-        }
-    })
+    try {
+        const res = await fetch(url, {
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...(token && {Authorization: `Bearer ${token}`}),
+                ...options?.headers
+            }
+        });
+
+        return res.json()
+    } catch (error) {
+        console.error('callApi failed:', error);
+        return null;
+    }
     /*
     // Gérer le refresh si 401
     if (res.status === 401) {
@@ -37,7 +44,7 @@ export async function callApi(endpoint: string, options?: any) {
     }
     */
 
-    return res.json()
+
 }
 
 /*

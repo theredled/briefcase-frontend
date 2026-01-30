@@ -4,7 +4,7 @@ import {isSimpleFile} from "@/types/simple-file";
 import React, {Fragment, useRef} from "react";
 import Link from "next/dist/client/link";
 
-export function DocumentItem({document}: {document: BcDocument}) {
+export default function DocumentItem({document}: {document: BcDocument}) {
     const itemRef = useRef<HTMLLIElement>(null);
     const messageRef = useRef<HTMLParagraphElement>(null);
     const copyBtnRef = useRef<HTMLButtonElement>(null);

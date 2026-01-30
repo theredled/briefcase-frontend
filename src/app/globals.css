@@ -39,7 +39,8 @@ body {margin: 0 0; padding: 0; font-family: "Helvetica Neue",Arial,sans-serif; /
 #global {position: relative; width: 1000px; margin: 0 auto; }
 ul, li {list-style: none}
 .hidden {display: none; }
-button {border: none; cursor: pointer; font-size: inherit;}
+button {border: none; cursor: pointer; font-size: inherit; background: none;}
+.btn {border: none; background: black; color: white; padding: 3px 5px }
 
 .section-block {margin: 0 0 30px 0; }
 .section-content {background: white; border: 1px solid #CCC; overflow: hidden;}
