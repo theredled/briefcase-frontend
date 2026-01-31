@@ -13,14 +13,22 @@ export const metadata: Metadata = {
 export default async function RootLayout({children}: Readonly<{ children: React.ReactNode; }>) {
     let userButtons;
     if (await isLoggedIn()) {
-        userButtons = <form action={logout}>
-            <button><i className="fa fa-sign-out" title="Se déconnecter"></i></button>
+        userButtons = (<>
+            <li>
+                <Link href={process.env.ADMIN_URL as string}>
+                    <i className="fa fa-user-cog" title="Admin"></i>
+                </Link>
+            </li>
+            <li>
+                <form action={logout}>
+                    <button><i className="fa fa-sign-out" title="Se déconnecter"></i></button>
                 </form>
-    }
-    else {
+            </li>
+        </>);
+    } else {
         userButtons = <Link href="/login?redirect=/">
-                    <i className="fa fa-sign-in" title="Se connecter"></i>
-                </Link>;
+            <i className="fa fa-sign-in" title="Se connecter"></i>
+        </Link>;
     }
 
     return (

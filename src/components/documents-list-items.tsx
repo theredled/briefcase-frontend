@@ -13,7 +13,7 @@ export  default async function DocumentsListItems(
 ) {
     if (list === undefined) {
         if (!apiEndpoint)
-            throw new Error('list/apiEntrypoint is required');
+            throw new Error('list/apiEndpoint is required');
         list = (await callApi(apiEndpoint)) || [];
     }
 
