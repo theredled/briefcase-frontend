@@ -1,4 +1,4 @@
-import {BcDocument} from "@/types/bcDocument";
+import {BcDocument} from "@/types/bc-document";
 import DocumentsListItems from "@/components/documents-list-items";
 import SimpleFilesList from "@/components/simple-files-list";
 import Link from "next/dist/client/link";

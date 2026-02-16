@@ -1,4 +1,4 @@
-import {BcDocument} from "@/types/bcDocument";
+import {BcDocument} from "@/types/bc-document";
 
 export default async function RegularDocumentDetail({document}: {document: BcDocument}) {
     return <div>

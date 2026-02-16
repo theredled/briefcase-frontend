@@ -1,4 +1,4 @@
-import {BcDocument} from "@/types/bcDocument";
+import {BcDocument} from "@/types/bc-document";
 
 export type SimpleFile = {
     name: string;

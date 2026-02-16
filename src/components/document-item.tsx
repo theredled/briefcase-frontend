@@ -1,6 +1,5 @@
 'use client'
-import {BcDocument} from "@/types/bcDocument";
-import {isSimpleFile} from "@/types/simple-file";
+import {BcDocument} from "@/types/bc-document";
 import React, {Fragment, useRef} from "react";
 import Link from "next/dist/client/link";
 
@@ -43,7 +42,6 @@ export default function DocumentItem({document}: {document: BcDocument}) {
                 </p>
             }
             <div className="copy-url-block">
-
                 {document.is_valid && <>
                     <p ref={messageRef} className="copy-url-success-message hidden">Lien copié !</p>
                     <button className="copy-url-btn" onClick={copyLinkInClipboard} ref={copyBtnRef}>

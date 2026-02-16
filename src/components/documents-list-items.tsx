@@ -1,5 +1,5 @@
 
-import {BcDocument, isDocument} from "@/types/bcDocument";
+import {BcDocument, isDocument} from "@/types/bc-document";
 import {SimpleFile, isSimpleFile} from "@/types/simple-file";
 import Link from "next/dist/client/link";
 import React from "react";
@@ -13,7 +13,7 @@ export  default async function DocumentsListItems(
 ) {
     if (list === undefined) {
         if (!apiEndpoint)
-            throw new Error('list/apiEndpoint is required');
+            throw new Error('list OR apiEndpoint is required');
         list = (await callApi(apiEndpoint)) || [];
     }
 
