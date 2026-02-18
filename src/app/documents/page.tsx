@@ -4,6 +4,8 @@ import {callApi} from "@/lib/api-client";
 import AppLayout from "@/components/app-layout";
 import {Briefcase} from "@/types/briefcase";
 import {fetchCurrentBriefcase} from "@/lib/model";
+import {SearchBar} from "@/components/search-bar";
+
 
 export default async function DocumentsPage() {
     const briefcase = await fetchCurrentBriefcase();

@@ -28,9 +28,22 @@ body {
 
 @import "@fortawesome/fontawesome-free/css/all.css";
 
+:root {
+    /*--fancy-monospace: "American Typewriter"*/
+    --fancy-monospace: "Courier Prime";
+}
+
 @font-face {
     font-family: "American Typewriter";
     src: local('American Typewriter'), url('../../assets/fonts/americantypewriter_1-webfont.ttf') format('truetype');
+}
+/* courier-prime-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Courier Prime';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../../assets/fonts/courier-prime-v11-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
 body {margin: 0 0; padding: 0; font-family: "Helvetica Neue",Arial,sans-serif; /*font-family: Helvetica, sans-serif;*/ font-size: 13px;
@@ -127,15 +140,21 @@ ul.document-list.size-small .file-item .icon {font-size: 20px; display: inline-b
 
 input.form-control {display: block; padding: .2em .4em; width: 20em; margin-bottom: .5em;}
 
-#header-menu {z-index: 10; color: #111; position: absolute; top: auto; right: 0; left:0;
-    bottom: 2px;font-family: monospace; display: flex; justify-content: space-between; font-size: 1em}
+#header-menu {z-index: 10; color: #111; position: absolute; top: auto; right: 0; left:0; opacity: 0.8;
+    bottom: 2px;font-family: var(--fancy-monospace), monospace; display: flex; justify-content: space-between;
+    font-size: 1em;     align-items: end;}
 #header-menu a {text-decoration: none}
 #header-menu a i {margin-left: .3em}
 #header-menu li {display: inline-block; margin-left: 1em}
-#header-menu .btn-label {margin-left: .3em; font-family: monospace}
-.briefcase-title {font-size: 1em; font-weight: lighter;}
-.header-menu-right {transform: skew(0.3rad); text-shadow: -2px -2px 2px rgba(200, 200, 200, 0.7); margin-right: 45px; }
-.header-menu-left {transform: skew(-0.3rad); text-shadow: -2px -2px 2px rgba(200, 200, 200, 0.7); margin-left: 45px; }
+
+#header-menu .btn-label {margin-left: .3em; font-family: var(--fancy-monospace), monospace}
+.briefcase-title {font-size: 1em; font-weight: bold;}
+.header-menu-right {transform: skew(0.3rad); text-shadow: -2px -2px 2px rgba(200, 200, 200, 0.7); padding-right: 45px;
+    flex : 1 ; justify-content: flex-end;text-align: right; font-size: 0.95em}
+.header-menu-center {flex : 1; justify-content: center; text-align: center }
+.header-menu-left {transform: skew(-0.3rad); text-shadow: -2px -2px 2px rgba(200, 200, 200, 0.7); padding-left: 45px;
+    flex: 1 ; justify-content: flex-start;text-align: left;  font-size: 0.95em}
+.search-input {font-family: var(--fancy-monospace), monospace;     border: 1px solid white; font-size: 1em}
 
 @media screen and (max-width: 975px) {
     body {background: none}

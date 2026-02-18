@@ -1,25 +1,32 @@
-
+"use client"
 import {BcDocument, isDocument} from "@/types/bc-document";
 import {SimpleFile, isSimpleFile} from "@/types/simple-file";
-import Link from "next/dist/client/link";
 import React from "react";
 import DocumentItem from "@/components/document-item";
-import {callApi} from "@/lib/api-client";
+import {useSearch} from "@/search-context";
 
 
-export  default async function DocumentsListItems(
-    {list, apiEndpoint, size = 'medium'}:
-    {list?: (BcDocument|SimpleFile)[], apiEndpoint?: string, size?: string}
+export  default function DocumentsListItems(
+    {list, size = 'medium'}:
+    {list: (BcDocument|SimpleFile)[],  size?: string}
 ) {
-    if (list === undefined) {
+    const { query } = useSearch();
+
+    const filteredList = query
+        ? list.filter((item) =>
+            item.name && item.name.toLowerCase().includes(query.toLowerCase())
+        )
+        : list;
+
+    /*if (list === undefined) {
         if (!apiEndpoint)
             throw new Error('list OR apiEndpoint is required');
         list = (await callApi(apiEndpoint)) || [];
-    }
+    }*/
 
     return (
         <>
-            {list?.map((documentOrFile: BcDocument|SimpleFile, i: number) => <>
+            {filteredList?.map((documentOrFile: BcDocument|SimpleFile, i: number) => <>
                 {isDocument(documentOrFile) &&
                     <DocumentItem document={documentOrFile} />
                 }
