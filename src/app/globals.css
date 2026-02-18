@@ -41,6 +41,7 @@ ul, li {list-style: none}
 .hidden {display: none; }
 button {border: none; cursor: pointer; font-size: inherit; background: none;}
 .btn {border: none; background: black; color: white; padding: 3px 5px }
+.btn-label {display: inline-block; }
 
 .section-block {margin: 0 0 30px 0; }
 .section-content {background: white; border: 1px solid #CCC; overflow: hidden;}
@@ -127,12 +128,14 @@ ul.document-list.size-small .file-item .icon {font-size: 20px; display: inline-b
 input.form-control {display: block; padding: .2em .4em; width: 20em; margin-bottom: .5em;}
 
 #header-menu {z-index: 10; color: #111; position: absolute; top: auto; right: 0; left:0;
-    bottom: 2px;font-family: monospace; display: flex; justify-content: space-between; font-size: 1.1em}
+    bottom: 2px;font-family: monospace; display: flex; justify-content: space-between; font-size: 1em}
 #header-menu a {text-decoration: none}
 #header-menu a i {margin-left: .3em}
+#header-menu li {display: inline-block; margin-left: 1em}
+#header-menu .btn-label {margin-left: .3em; font-family: monospace}
 .briefcase-title {font-size: 1em; font-weight: lighter;}
 .header-menu-right {transform: skew(0.3rad); text-shadow: -2px -2px 2px rgba(200, 200, 200, 0.7); margin-right: 45px; }
-.header-menu-left {transform: skew(-0.3rad); text-shadow: -2px -2px 2px rgba(200, 200, 200, 0.7); margin-left: 35px; }
+.header-menu-left {transform: skew(-0.3rad); text-shadow: -2px -2px 2px rgba(200, 200, 200, 0.7); margin-left: 45px; }
 
 @media screen and (max-width: 975px) {
     body {background: none}

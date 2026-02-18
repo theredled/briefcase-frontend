@@ -13,12 +13,14 @@ export default async function AppLayout({children}: Readonly<{
         userButtons = (<>
             <li>
                 <Link href={process.env.ADMIN_URL as string}>
-                    <i className="fa fa-user-cog" title="Admin"></i> <span className="btn-label">Admin</span>
+                    <i className="fa fa-user-cog" title="Admin"></i>
+                    <span className="btn-label">Admin</span>
                 </Link>
             </li>
             <li>
                 <form action={logout}>
-                    <button><i className="fa fa-sign-out" title="Se déconnecter"></i>
+                    <button>
+                        <i className="fa fa-sign-out" title="Se déconnecter"></i>
                         <span className="btn-label">Se déconnecter</span>
                     </button>
                 </form>
@@ -45,19 +47,18 @@ export default async function AppLayout({children}: Readonly<{
             <div id="header">
                 <h1>Briefcase</h1>
                 <nav id="header-menu">
-                    <div className="header-menu-left">{userButtons}</div>
+                    <div className="header-menu-left">
+                        <h2 className="briefcase-title">{briefcase.name}</h2>
+                    </div>
                     <div className="header-menu-center"></div>
                     <div className="header-menu-right">
-                        <h2 className="briefcase-title">{briefcase.name}</h2>
+                        {userButtons}
                     </div>
 
                 </nav>
             </div>
 
             <div id="content">
-                <nav className="user-menu">
-                    {userButtons}
-                </nav>
                 {children}
             </div>
 
