@@ -1,9 +1,27 @@
 'use server'
 import {cookies} from 'next/headers'
 
+function findDomainName(url: string) {
+    const urlObject = URL.parse(url);
+    let domainName;
+    //-- Ip v4
+    if (urlObject?.hostname.match(/^\d+\.\d+\.\d+\.\d+$/))
+        domainName = urlObject.hostname;
+    else
+        domainName = urlObject?.hostname.split('.').slice(-2).join('.');
+    console.log(urlObject, domainName)
+    return domainName;
+}
+
 export async function login(email: string, password: string) {
     const url = process.env.API_URL + '/login_check';
-    console.log('login url : ', url);
+    const domainName = process.env.COMMON_DOMAIN_NAME; //findDomainName(url);
+
+    if (!domainName) {
+        throw new Error('No domain name found');
+    }
+
+    //console.log('login url : ', url);
     try {
         const res = await fetch(url, {
             method: 'POST',
@@ -14,9 +32,9 @@ export async function login(email: string, password: string) {
             body: JSON.stringify({username: email, password: password})
         });
 
-        console.log('login response : ', res);
+        //console.log('login response : ', res);
         const data = await res.json();
-        console.log('login data : ', data);
+        //console.log('login data : ', data);
 
         if (data?.code && data?.message)
             return {
@@ -27,18 +45,20 @@ export async function login(email: string, password: string) {
 
         if (data.token) {
             const cookieStore = await cookies()
-            cookieStore.set('token', data.token, {
+            cookieStore.set('jwt_token', data.token, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
                 sameSite: 'strict',
+                domain: '.' + domainName,
                 maxAge: 3600 // 1h
             })
 
             if (data.refresh_token) {
-                cookieStore.set('refresh_token', data.refresh_token, {
+                cookieStore.set('refresh_jwt_token', data.refresh_token, {
                     httpOnly: true,
                     secure: process.env.NODE_ENV === 'production',
                     sameSite: 'strict',
+                    domain: '.' + domainName,
                     maxAge: 604800 // 7 jours
                 })
             }
@@ -58,13 +78,13 @@ export async function login(email: string, password: string) {
 
 export async function logout() {
     const cookieStore = await cookies()
-    cookieStore.delete('token')
-    cookieStore.delete('refresh_token')
+    cookieStore.delete('jwt_token')
+    cookieStore.delete('refresh_jwt_token')
 }
 
 export async function getAuthToken() {
     const cookieStore = await cookies()
-    return cookieStore.get('token')?.value
+    return cookieStore.get('jwt_token')?.value
 }
 
 export async function isLoggedIn() {
